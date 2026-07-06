@@ -1,0 +1,636 @@
+/* ==========================================================================
+   TIGRES DE NANCY — Feuille de style principale
+   Palette : noir profond / orange tigre / crème
+   Typo    : Anton (titres) · Barlow (texte) · Barlow Condensed (labels)
+   ========================================================================== */
+
+:root {
+  --noir: #0c0b0a;
+  --anthracite: #16130f;
+  --carbone: #201c17;
+  --orange: #f26b1d;
+  --orange-vif: #ff8a2a;
+  --orange-sombre: #b84a0c;
+  --creme: #f3eee6;
+  --gris: #9a9184;
+  --ligne: rgba(243, 238, 230, 0.12);
+
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Helvetica Neue", sans-serif;
+  --font-label: "Barlow Condensed", "Arial Narrow", sans-serif;
+
+  --container: 1180px;
+  --radius: 4px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--noir);
+  color: var(--creme);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Typographie ---------- */
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+
+h1 { font-size: clamp(3rem, 9vw, 7rem); }
+h2 { font-size: clamp(2rem, 5vw, 3.4rem); }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
+
+.eyebrow {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.85rem;
+  color: var(--orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 2px;
+  background: var(--orange);
+  transform: skewX(-30deg);
+}
+
+p.lead { font-size: 1.15rem; color: var(--creme); }
+p.muted { color: var(--gris); }
+
+/* ---------- Boutons ---------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 1.05rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border: 2px solid var(--orange);
+  color: var(--creme);
+  background: transparent;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  cursor: pointer;
+}
+
+.btn:hover { background: var(--orange); color: var(--noir); }
+
+.btn--plein {
+  background: var(--orange);
+  color: var(--noir);
+  font-weight: 600;
+}
+
+.btn--plein:hover { background: var(--orange-vif); }
+
+.btn:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--orange-vif);
+  outline-offset: 3px;
+}
+
+/* ---------- Griffes (signature visuelle) ---------- */
+
+.griffes {
+  width: 74px;
+  height: 40px;
+  display: block;
+}
+
+.griffes path { fill: var(--orange); }
+
+/* ---------- Header ---------- */
+
+.topbar {
+  background: var(--anthracite);
+  border-bottom: 1px solid var(--ligne);
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.topbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 38px;
+  gap: 16px;
+}
+
+.topbar__devise { color: var(--gris); }
+
+.topbar__social { display: flex; gap: 18px; }
+.topbar__social a { color: var(--gris); transition: color 0.2s; }
+.topbar__social a:hover { color: var(--orange); }
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(12, 11, 10, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ligne);
+}
+
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 74px;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.logo__badge {
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
+
+.logo span em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.nav { display: flex; align-items: center; gap: 6px; }
+
+.nav a,
+.nav .nav__parent {
+  font-family: var(--font-label);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  color: var(--creme);
+  transition: color 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"],
+.nav .nav__parent:hover { color: var(--orange); }
+
+.nav__item { position: relative; }
+
+.nav__sous {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: var(--carbone);
+  border: 1px solid var(--ligne);
+  border-top: 3px solid var(--orange);
+  display: none;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.nav__item:hover .nav__sous,
+.nav__item:focus-within .nav__sous { display: flex; }
+
+.nav__sous a { padding: 10px 18px; }
+
+.burger {
+  display: none;
+  background: none;
+  border: 2px solid var(--orange);
+  color: var(--creme);
+  font-family: var(--font-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(115deg, rgba(12, 11, 10, 0.96) 38%, rgba(12, 11, 10, 0.55)),
+    repeating-linear-gradient(
+      -55deg,
+      var(--anthracite) 0px,
+      var(--anthracite) 90px,
+      var(--carbone) 90px,
+      var(--carbone) 96px
+    );
+}
+
+.hero::after {
+  /* grande griffe décorative */
+  content: "";
+  position: absolute;
+  right: -140px;
+  top: -60px;
+  width: 560px;
+  height: 560px;
+  background:
+    linear-gradient(-55deg, transparent 46%, var(--orange-sombre) 46%, var(--orange-sombre) 49%, transparent 49%),
+    linear-gradient(-55deg, transparent 56%, var(--orange) 56%, var(--orange) 60%, transparent 60%),
+    linear-gradient(-55deg, transparent 67%, var(--orange-sombre) 67%, var(--orange-sombre) 69%, transparent 69%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  padding: 110px 0 120px;
+  max-width: 720px;
+}
+
+.hero__saison {
+  font-family: var(--font-label);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange-vif);
+  margin-bottom: 18px;
+  font-size: 0.95rem;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.hero p {
+  margin: 26px 0 38px;
+  font-size: 1.2rem;
+  color: var(--gris);
+  max-width: 540px;
+}
+
+.hero__actions { display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* ---------- Sections ---------- */
+
+.section { padding: 96px 0; }
+
+.section--alt { background: var(--anthracite); }
+
+.section__head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 52px;
+  max-width: 640px;
+}
+
+/* ---------- Cartes matchs ---------- */
+
+.matchs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+.match {
+  background: var(--carbone);
+  border: 1px solid var(--ligne);
+  border-left: 4px solid var(--orange);
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.match__date {
+  font-family: var(--font-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--orange-vif);
+}
+
+.match__affiche {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.match__lieu { color: var(--gris); font-size: 0.95rem; }
+
+.match__tag {
+  align-self: flex-start;
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid var(--orange);
+  color: var(--orange);
+}
+
+.match--domicile .match__tag {
+  background: var(--orange);
+  color: var(--noir);
+}
+
+/* ---------- Blocs équipes ---------- */
+
+.equipes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+.equipe {
+  position: relative;
+  background: var(--carbone);
+  border: 1px solid var(--ligne);
+  padding: 34px 26px 30px;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.equipe:hover { border-color: var(--orange); transform: translateY(-4px); }
+
+.equipe::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(-55deg, transparent 48%, var(--orange) 48%, var(--orange) 55%, transparent 55%);
+  opacity: 0.5;
+}
+
+.equipe h3 { margin-bottom: 8px; }
+.equipe p { color: var(--gris); font-size: 0.98rem; margin-bottom: 18px; }
+
+.equipe .lien {
+  font-family: var(--font-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-size: 0.9rem;
+}
+
+.equipe .lien:hover { color: var(--orange-vif); }
+
+/* ---------- Bandeau histoire ---------- */
+
+.histoire { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
+
+.histoire__visuel {
+  aspect-ratio: 4 / 3;
+  background:
+    linear-gradient(160deg, rgba(242, 107, 29, 0.16), transparent 55%),
+    repeating-linear-gradient(-55deg, var(--carbone) 0 70px, var(--anthracite) 70px 76px);
+  border: 1px solid var(--ligne);
+  display: grid;
+  place-items: center;
+}
+
+.histoire__visuel .griffes { width: 120px; height: 66px; opacity: 0.9; }
+
+.chiffres { display: flex; gap: 40px; margin-top: 34px; flex-wrap: wrap; }
+
+.chiffre .display { font-size: 2.6rem; color: var(--orange); }
+
+.chiffre span {
+  font-family: var(--font-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+
+/* ---------- Bandeau inscription ---------- */
+
+.cta-inscription {
+  background:
+    linear-gradient(100deg, var(--orange-sombre), var(--orange) 65%, var(--orange-vif));
+  color: var(--noir);
+  padding: 72px 0;
+}
+
+.cta-inscription .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.cta-inscription h2 { max-width: 620px; }
+
+.cta-inscription .btn {
+  border-color: var(--noir);
+  color: var(--noir);
+  font-weight: 600;
+}
+
+.cta-inscription .btn:hover { background: var(--noir); color: var(--creme); }
+
+/* ---------- Partenaires ---------- */
+
+.partenaires { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+.partenaire {
+  background: var(--carbone);
+  border: 1px solid var(--ligne);
+  min-height: 110px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gris);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.partenaire:hover { border-color: var(--orange); color: var(--creme); }
+
+/* ---------- Tableaux (calendrier / classement) ---------- */
+
+.tableau { width: 100%; border-collapse: collapse; }
+
+.tableau th {
+  font-family: var(--font-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--orange);
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 2px solid var(--orange);
+}
+
+.tableau td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ligne);
+}
+
+.tableau tr:hover td { background: rgba(242, 107, 29, 0.06); }
+
+/* ---------- Roster ---------- */
+
+.roster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+.joueur {
+  background: var(--carbone);
+  border: 1px solid var(--ligne);
+  padding: 22px 20px;
+}
+
+.joueur .numero {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--orange);
+}
+
+.joueur .nom { font-family: var(--font-display); font-size: 1.1rem; text-transform: uppercase; }
+
+.joueur .poste {
+  font-family: var(--font-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+
+/* ---------- Formulaire / infos pratiques ---------- */
+
+.grille-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+.encart {
+  background: var(--carbone);
+  border: 1px solid var(--ligne);
+  border-top: 3px solid var(--orange);
+  padding: 32px 28px;
+}
+
+.encart h3 { margin-bottom: 14px; }
+.encart ul { list-style: none; display: flex; flex-direction: column; gap: 10px; color: var(--gris); }
+.encart li strong { color: var(--creme); }
+
+/* ---------- Footer ---------- */
+
+.footer {
+  background: var(--anthracite);
+  border-top: 3px solid var(--orange);
+  padding: 72px 0 32px;
+  margin-top: 0;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+
+.footer h4 {
+  font-family: var(--font-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: var(--orange);
+  margin-bottom: 18px;
+}
+
+.footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer a { color: var(--gris); transition: color 0.2s; }
+.footer a:hover { color: var(--orange-vif); }
+.footer p { color: var(--gris); font-size: 0.95rem; }
+
+.footer__legal {
+  border-top: 1px solid var(--ligne);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--gris);
+  font-family: var(--font-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---------- Animations ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .equipe, .btn { transition: none; }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 960px) {
+  .matchs, .equipes { grid-template-columns: 1fr 1fr; }
+  .roster { grid-template-columns: 1fr 1fr 1fr; }
+  .histoire { grid-template-columns: 1fr; gap: 40px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+  .partenaires { grid-template-columns: 1fr 1fr; }
+  .grille-2 { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--carbone);
+    flex-direction: column;
+    align-items: stretch;
+    border-bottom: 1px solid var(--ligne);
+    padding: 12px 0;
+  }
+  .nav.ouvert { display: flex; }
+  .nav__sous { position: static; display: flex; border: none; padding-left: 18px; }
+  .burger { display: block; }
+  .topbar__devise { display: none; }
+  .matchs, .equipes { grid-template-columns: 1fr; }
+  .roster { grid-template-columns: 1fr 1fr; }
+  .hero__inner { padding: 72px 0 84px; }
+  .hero::after { display: none; }
+  .section { padding: 64px 0; }
+}
