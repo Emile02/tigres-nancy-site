@@ -8,6 +8,20 @@
       var ouvert = nav.classList.toggle("ouvert");
       burger.setAttribute("aria-expanded", ouvert ? "true" : "false");
     });
+    // Referme le menu après avoir tapé un lien, ou avec Échap
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) {
+        nav.classList.remove("ouvert");
+        burger.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("ouvert")) {
+        nav.classList.remove("ouvert");
+        burger.setAttribute("aria-expanded", "false");
+        burger.focus();
+      }
+    });
   }
 
   // Apparition au scroll (désactivée si l'utilisateur préfère réduire les animations)

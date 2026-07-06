@@ -612,6 +612,21 @@ a:focus-visible {
 }
 
 @media (max-width: 720px) {
+  body { font-size: 16px; }
+  .container { padding: 0 18px; }
+
+  /* --- Topbar --- */
+  .topbar__devise { display: none; }
+  .topbar .container { justify-content: center; }
+  .topbar__social { gap: 14px; font-size: 0.78rem; }
+
+  /* --- Header / menu mobile --- */
+  .header .container { min-height: 62px; }
+  .logo { font-size: 1.1rem; gap: 9px; }
+  .logo__badge { width: 36px; height: 36px; }
+  .burger { display: block; padding: 7px 14px; font-size: 0.9rem; }
+  .burger[aria-expanded="true"] { background: var(--orange); color: var(--noir); }
+
   .nav {
     display: none;
     position: absolute;
@@ -621,16 +636,92 @@ a:focus-visible {
     background: var(--carbone);
     flex-direction: column;
     align-items: stretch;
-    border-bottom: 1px solid var(--ligne);
-    padding: 12px 0;
+    gap: 0;
+    border-bottom: 3px solid var(--orange);
+    padding: 8px 0 16px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.5);
   }
   .nav.ouvert { display: flex; }
-  .nav__sous { position: static; display: flex; border: none; padding-left: 18px; }
-  .burger { display: block; }
-  .topbar__devise { display: none; }
+
+  /* zones tactiles généreuses + séparateurs */
+  .nav > a,
+  .nav .nav__parent {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 15px 22px;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--ligne);
+  }
+  .nav__item { border-bottom: 1px solid var(--ligne); }
+  .nav__item .nav__parent {
+    border-bottom: none;
+    color: var(--orange);
+    letter-spacing: 0.2em;
+    font-size: 0.85rem;
+    padding-bottom: 4px;
+    pointer-events: none; /* simple intitulé de groupe sur mobile */
+  }
+  .nav__sous {
+    position: static;
+    display: flex;
+    border: none;
+    padding: 0 0 8px;
+    background: transparent;
+  }
+  .nav__sous a { padding: 12px 34px; font-size: 1.02rem; }
+  .nav .btn { margin: 16px 22px 0; text-align: center; }
+
+  /* --- Hero --- */
+  .hero__inner { padding: 56px 0 64px; }
+  .hero__saison { font-size: 0.82rem; letter-spacing: 0.22em; }
+  .hero p { font-size: 1.05rem; margin: 20px 0 30px; }
+  .hero::after {
+    /* griffe réduite mais conservée : l'identité reste visible sur mobile */
+    display: block;
+    right: -190px;
+    top: -160px;
+    width: 380px;
+    height: 380px;
+    opacity: 0.55;
+  }
+  .hero__actions { flex-direction: column; align-items: stretch; }
+  .hero__actions .btn { text-align: center; }
+
+  /* --- Sections & grilles --- */
+  .section { padding: 56px 0; }
+  .section__head { margin-bottom: 36px; }
   .matchs, .equipes { grid-template-columns: 1fr; }
-  .roster { grid-template-columns: 1fr 1fr; }
-  .hero__inner { padding: 72px 0 84px; }
-  .hero::after { display: none; }
-  .section { padding: 64px 0; }
+  .roster { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .joueur { padding: 18px 16px; }
+  .chiffres { gap: 24px; }
+  .chiffre .display { font-size: 2.1rem; }
+  .histoire__visuel { aspect-ratio: 16 / 9; }
+
+  /* --- CTA inscription --- */
+  .cta-inscription { padding: 52px 0; }
+  .cta-inscription .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .cta-inscription .btn { width: 100%; text-align: center; }
+
+  /* --- Tableaux : défilement fluide --- */
+  .tableau { min-width: 560px; }
+  .tableau th, .tableau td { padding: 12px 12px; font-size: 0.95rem; }
+
+  /* --- Footer --- */
+  .footer { padding: 52px 0 24px; }
+  .footer__grid { grid-template-columns: 1fr; gap: 30px; margin-bottom: 40px; }
+  .footer__legal { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+@media (max-width: 400px) {
+  .roster { grid-template-columns: 1fr; }
+  .partenaires { grid-template-columns: 1fr; }
+  .partenaire { min-height: 84px; }
+  h1 { font-size: clamp(2.4rem, 12vw, 3rem); }
 }
