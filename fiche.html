@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fiche matériel — Tigres de Nancy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noir:#0c0b0a; --noir-2:#171512; --orange:#f26b1d; --orange-vif:#ff8a2a;
+    --blanc:#f3eee6; --gris:#8b837a; --gris-clair:#c4bbb0; --ligne:#2a2521;
+    --vert:#3fa34d; --jaune:#e0a500; --rouge:#cf3b2f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--noir);color:var(--blanc);
+       font-family:Barlow,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:520px;margin:0 auto;padding:20px 16px 48px}
+  header{display:flex;align-items:center;gap:10px;padding-bottom:18px;border-bottom:2px solid var(--orange)}
+  header .marque{font-family:Anton,Impact,sans-serif;font-size:20px;letter-spacing:.5px;text-transform:uppercase}
+  header .marque span{color:var(--orange)}
+  header .sous{margin-left:auto;font-family:"Barlow Condensed",Barlow,sans-serif;font-size:12px;
+               color:var(--gris);text-transform:uppercase;letter-spacing:1.4px}
+
+  .code{font-family:Anton,Impact,sans-serif;font-size:52px;line-height:1;margin:24px 0 4px;letter-spacing:1px}
+  .titre{font-size:17px;font-weight:600;color:var(--gris-clair);margin-bottom:18px}
+
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+  .badge{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:13px;font-weight:600;
+         text-transform:uppercase;letter-spacing:.9px;
+         padding:6px 12px;border-radius:999px;background:var(--noir-2);border:1px solid var(--ligne)}
+  .badge.ok{background:rgba(63,163,77,.15);border-color:var(--vert);color:#7fd48c}
+  .badge.warn{background:rgba(224,165,0,.15);border-color:var(--jaune);color:#f0c545}
+  .badge.bad{background:rgba(207,59,47,.15);border-color:var(--rouge);color:#e8776c}
+
+  dl{margin:0;border-top:1px solid var(--ligne)}
+  .ligne{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+         padding:13px 2px;border-bottom:1px solid var(--ligne)}
+  dt{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:13px;text-transform:uppercase;
+     letter-spacing:1px;color:var(--gris);flex:0 0 auto}
+  dd{margin:0;font-size:15px;font-weight:600;text-align:right}
+  dd.vide{color:var(--gris);font-weight:400;font-style:italic}
+
+  .porteur{margin-top:26px;background:var(--noir-2);border:1px solid var(--ligne);
+           border-left:3px solid var(--orange);border-radius:6px;padding:16px 18px}
+  .porteur .lab{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:12px;text-transform:uppercase;
+                letter-spacing:1.4px;color:var(--gris);margin-bottom:6px}
+  .porteur .val{font-family:Anton,Impact,sans-serif;font-size:26px;letter-spacing:.5px}
+  .porteur .note{margin-top:8px;font-size:12px;color:var(--gris);line-height:1.5}
+
+  .alerte{margin-top:20px;border-radius:6px;padding:14px 16px;font-size:13.5px;line-height:1.55}
+  .alerte.warn{background:rgba(224,165,0,.12);border:1px solid rgba(224,165,0,.5);color:#f0c545}
+  .alerte.bad{background:rgba(207,59,47,.12);border:1px solid rgba(207,59,47,.5);color:#e8776c}
+
+  .etat-msg{margin:60px 0;text-align:center}
+  .etat-msg .gros{font-family:Anton,Impact,sans-serif;font-size:30px;margin-bottom:10px}
+  .etat-msg p{color:var(--gris);font-size:14px;line-height:1.6;margin:0 auto;max-width:340px}
+  .spin{width:26px;height:26px;margin:0 auto 16px;border:3px solid var(--ligne);
+        border-top-color:var(--orange);border-radius:50%;animation:t .8s linear infinite}
+  @keyframes t{to{transform:rotate(360deg)}}
+
+  footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--ligne);
+         font-size:11.5px;color:var(--gris);line-height:1.6}
+  footer a{color:var(--orange-vif);text-decoration:none}
+  @media (max-width:360px){ .code{font-size:44px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="marque">Tigres<span>.</span></div>
+    <div class="sous">Fiche matériel</div>
+  </header>
+
+  <main id="app">
+    <div class="etat-msg"><div class="spin"></div><p>Lecture de l'inventaire…</p></div>
+  </main>
+
+  <footer>
+    Page interne du club. Les données proviennent de l'inventaire matériel et sont
+    mises à jour en direct. Une erreur&nbsp;? Préviens un dirigeant.
+  </footer>
+
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   CONFIGURATION — une seule ligne à changer
+   ------------------------------------------------------------------
+   Colle ici l'URL CSV de l'onglet "Public" du classeur d'inventaire.
+   Pour l'obtenir : Google Sheets > Fichier > Partager > Publier sur le web
+   > choisir l'onglet "Public" > format "CSV" > Publier, puis copier le lien.
+   L'URL ressemble a :
+   https://docs.google.com/spreadsheets/d/e/2PACX-xxxxxxxx/pub?gid=123456&single=true&output=csv
+------------------------------------------------------------------ */
+var CSV_PUBLIC = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQtEnN6JSuRigcOvfPrTqWHWRtrcrEhrDY_cZ3qPO6mmhs_GWQiZWYyiZ9hSyL7dqQ6F46r8MsSuMMw/pub?gid=429028028&single=true&output=csv";
+
+/* Colonnes attendues dans l'onglet Public, dans cet ordre :
+   A Code | B Categorie | C Marque | D Modele | E Taille | F Annee
+   G Etat | H Statut | I N maillot | J Derniere revision | K Initiales   */
+
+(function () {
+  "use strict";
+
+  var app = document.getElementById("app");
+
+  function msg(titre, texte) {
+    app.innerHTML = '<div class="etat-msg"><div class="gros"></div><p></p></div>';
+    app.querySelector(".gros").textContent = titre;
+    app.querySelector("p").textContent = texte;
+  }
+
+  function parseCSV(txt) {
+    var rows = [], row = [], val = "", q = false, i, c;
+    for (i = 0; i < txt.length; i++) {
+      c = txt[i];
+      if (q) {
+        if (c === '"') { if (txt[i + 1] === '"') { val += '"'; i++; } else q = false; }
+        else val += c;
+      } else if (c === '"') q = true;
+      else if (c === ",") { row.push(val); val = ""; }
+      else if (c === "\n") { row.push(val); rows.push(row); row = []; val = ""; }
+      else if (c !== "\r") val += c;
+    }
+    if (val !== "" || row.length) { row.push(val); rows.push(row); }
+    return rows;
+  }
+
+  function classeEtat(e) {
+    e = (e || "").toLowerCase();
+    if (e.indexOf("bon") === 0) return "ok";
+    if (e.indexOf("surveiller") > -1 || e.indexOf("verifier") > -1 || e.indexOf("vérifier") > -1) return "warn";
+    if (e.indexOf("reform") > -1 || e.indexOf("réform") > -1) return "bad";
+    return "";
+  }
+
+  function classeStatut(s) {
+    s = (s || "").toLowerCase();
+    if (s.indexOf("disponible") > -1) return "ok";
+    if (s.indexOf("attribu") > -1) return "";
+    if (s.indexOf("reparation") > -1 || s.indexOf("réparation") > -1) return "warn";
+    if (s.indexOf("perdu") > -1 || s.indexOf("reform") > -1 || s.indexOf("réform") > -1) return "bad";
+    return "";
+  }
+
+  function ligne(dl, label, valeur) {
+    var d = document.createElement("div"); d.className = "ligne";
+    var dt = document.createElement("dt"); dt.textContent = label;
+    var dd = document.createElement("dd");
+    if (valeur === undefined || valeur === null || String(valeur).trim() === "") {
+      dd.textContent = "non renseigné"; dd.className = "vide";
+    } else dd.textContent = valeur;
+    d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+  }
+
+  function rendre(p) {
+    app.innerHTML = "";
+
+    var h = document.createElement("div"); h.className = "code";
+    h.textContent = p.code; app.appendChild(h);
+
+    var t = document.createElement("div"); t.className = "titre";
+    var desc = [p.marque, p.modele].filter(Boolean).join(" ");
+    t.textContent = desc ? p.categorie + " — " + desc : p.categorie;
+    app.appendChild(t);
+
+    var b = document.createElement("div"); b.className = "badges";
+    function badge(txt, cls) {
+      if (!txt) return;
+      var s = document.createElement("span");
+      s.className = "badge" + (cls ? " " + cls : "");
+      s.textContent = txt; b.appendChild(s);
+    }
+    badge(p.etat, classeEtat(p.etat));
+    badge(p.statut, classeStatut(p.statut));
+    if (p.taille) badge("Taille " + p.taille, "");
+    app.appendChild(b);
+
+    var dl = document.createElement("dl");
+    ligne(dl, "Catégorie", p.categorie);
+    ligne(dl, "Marque", p.marque);
+    ligne(dl, "Modèle", p.modele);
+    ligne(dl, "Taille", p.taille);
+    ligne(dl, "Année d'achat", p.annee);
+    ligne(dl, "Dernière révision", p.revision);
+    app.appendChild(dl);
+
+    var box = document.createElement("div"); box.className = "porteur";
+    var lab = document.createElement("div"); lab.className = "lab";
+    lab.textContent = "Attribué à"; box.appendChild(lab);
+    var val = document.createElement("div"); val.className = "val";
+    if (p.initiales || p.maillot) {
+      val.textContent = (p.initiales || "?") + (p.maillot ? "  —  #" + p.maillot : "");
+    } else {
+      val.textContent = "PERSONNE";
+    }
+    box.appendChild(val);
+    var n = document.createElement("div"); n.className = "note";
+    n.textContent = (p.initiales || p.maillot)
+      ? "Identité complète consultable par les dirigeants dans l'inventaire."
+      : "Cette pièce n'est attribuée à aucun joueur.";
+    box.appendChild(n);
+    app.appendChild(box);
+
+    var annee = parseInt(p.annee, 10);
+    var an = new Date().getFullYear();
+    if (annee && an - annee >= 6 && !p.revision) {
+      var a = document.createElement("div"); a.className = "alerte bad";
+      a.textContent = "Cette pièce a " + (an - annee) + " ans et aucune révision n'est enregistrée. "
+        + "Un casque non reconditionné depuis plus de 6 ans ne doit plus être utilisé en match.";
+      app.appendChild(a);
+    } else if (classeEtat(p.etat) === "bad") {
+      var a2 = document.createElement("div"); a2.className = "alerte bad";
+      a2.textContent = "Pièce signalée à réformer. Ne pas remettre en circulation sans l'avis d'un dirigeant.";
+      app.appendChild(a2);
+    } else if (classeEtat(p.etat) === "warn") {
+      var a3 = document.createElement("div"); a3.className = "alerte warn";
+      a3.textContent = "Fiche à contrôler : l'état de cette pièce n'a pas encore été validé.";
+      app.appendChild(a3);
+    }
+  }
+
+  var code = (new URLSearchParams(location.search).get("c") || "").trim().toUpperCase();
+
+  if (!code) {
+    msg("Aucun code", "Cette page s'ouvre en scannant le QR code collé sur une pièce d'équipement.");
+    return;
+  }
+  if (!CSV_PUBLIC) {
+    msg("Page non configurée", "L'URL de l'inventaire n'a pas encore été renseignée dans le fichier m/index.html (variable CSV_PUBLIC).");
+    return;
+  }
+
+  fetch(CSV_PUBLIC, { cache: "no-store" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.text();
+    })
+    .then(function (txt) {
+      var rows = parseCSV(txt), i, r;
+      for (i = 1; i < rows.length; i++) {
+        r = rows[i];
+        if (r[0] && r[0].trim().toUpperCase() === code) {
+          rendre({
+            code: r[0].trim(), categorie: (r[1] || "").trim(), marque: (r[2] || "").trim(),
+            modele: (r[3] || "").trim(), taille: (r[4] || "").trim(), annee: (r[5] || "").trim(),
+            etat: (r[6] || "").trim(), statut: (r[7] || "").trim(), maillot: (r[8] || "").trim(),
+            revision: (r[9] || "").trim(), initiales: (r[10] || "").trim()
+          });
+          return;
+        }
+      }
+      msg("Code inconnu", 'Aucune pièce ne porte le code "' + code + '" dans l\'inventaire. '
+        + "L'étiquette est peut-être plus récente que le tableau.");
+    })
+    .catch(function () {
+      msg("Inventaire injoignable", "Impossible de lire l'inventaire pour le moment. "
+        + "Vérifie ta connexion, ou préviens un dirigeant si le problème persiste.");
+    });
+})();
+</script>
+</body>
+</html>
